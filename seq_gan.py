@@ -61,6 +61,7 @@ pre_train_dis_path = None
 
 
 def main():
+    os.makedirs("./result", exist_ok=True)
     # load rhyme table
     table = np.load("./data/table.npy")
     np.random.seed(SEED)
