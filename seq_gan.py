@@ -165,13 +165,14 @@ def main():
                 print(" epoch : %d time : %di: %d avg %f" % (total_batch, it, i, avg))
                 feed = {G.x: samples, G.rewards: rewards, G.inputs: input_x}
                 _ = sess.run(G.g_update, feed_dict=feed)
+        os.makedirs("./model/seq_gan", exist_ok=True)
+        saver_seqgan.save(sess, "./model/seq_gan/seq_gan_%d" %total_batch, global_step=total_batch)
         # Test
         if total_batch % 5 == 0 or total_batch == TOTAL_BATCH - 1:
             avg = np.mean(np.sum(rewards, axis=1), axis=0) / SEQ_LENGTH
             buffer = 'epoch:\t' + str(total_batch) + '\treward:\t' + str(avg) + '\n'
             print('total_batch: ', total_batch, 'average reward: ', avg)
             log.write(buffer)
-            os.makedirs("./model/seq_gan", exist_ok=True)
             saver_seqgan.save(sess, "./model/seq_gan/seq_gan", global_step=total_batch)
 
         g_beta.update_params()
