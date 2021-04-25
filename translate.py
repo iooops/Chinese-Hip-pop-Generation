@@ -1,7 +1,7 @@
 import numpy as np
 import argparse
 
-word2idx = np.load("./data/w2i.npy")
+word2idx = np.load("./data/w2i.npy", allow_pickle=True)
 word2idx = word2idx.item()
 id2word = {k: v for v, k in zip(word2idx.keys(), word2idx.values())}
 

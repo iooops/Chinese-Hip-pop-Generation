@@ -5,6 +5,7 @@ import random
 from g_beta import G_beta
 import time
 from util import *
+import os
 
 # Discriminator Parameters
 dis_filter_sizes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20]
@@ -105,6 +106,7 @@ def main():
             print("pre-train generator epoch time: ", time.time() - s, " s")
             best = 1000
             if loss < best:
+                os.makedirs("./model/pre_gen/pretrain_gen_best", exist_ok=True)
                 saver_gen.save(sess, "./model/pre_gen/pretrain_gen_best")
                 best = loss
     dev_loader = Input_Data_loader(BATCH_SIZE)
@@ -141,6 +143,7 @@ def main():
             #     print("saving at epoch: ", epoch)
             #     saver_dis.save(sess, "./model/per_dis/pretrain_dis", global_step=epoch)
             if acc > best:
+                os.makedirs("./model/pre_dis/pretrain_dis_best", exist_ok=True)
                 saver_dis.save(sess, "./model/pre_dis/pretrain_dis_best")
                 best = acc
         print("pre-train discriminator: ", time.time() - s, " s")
@@ -168,7 +171,7 @@ def main():
             buffer = 'epoch:\t' + str(total_batch) + '\treward:\t' + str(avg) + '\n'
             print('total_batch: ', total_batch, 'average reward: ', avg)
             log.write(buffer)
-
+            os.makedirs("./model/seq_gan", exist_ok=True)
             saver_seqgan.save(sess, "./model/seq_gan/seq_gan", global_step=total_batch)
 
         g_beta.update_params()
