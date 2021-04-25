@@ -51,7 +51,7 @@ def generate_paragraph(sess, generator_model, batch_size, generated_num, output_
 
 if __name__ == '__main__':
     # load rhyme table
-    table = np.load("./data/_table.npy")
+    table = np.load("./data/table.npy")
     G = Generator(vocab_size, BATCH_SIZE, EMB_DIM, HIDDEN_DIM, SEQ_LENGTH, START_TOKEN, table, mode='infer',
                   has_input=True)
     sess = tf.Session()
